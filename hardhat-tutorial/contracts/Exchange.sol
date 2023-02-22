@@ -47,4 +47,14 @@ contract Exchange is ERC20
         ERC20(cryptoDevTokenAddress).transfer(msg.sender, cryptoDevTokenAmount);
         return (ethAmount, cryptoDevTokenAmount);
     }
+    function getAmountOfTokens(
+        uint256 inputAmount, uint256 inputReserve, uint256 outputReserve 
+    ) public pure returns (uint256)
+    {
+        require(inputReserve > 0 && outputReserve > 0, "invalid Resources");
+        uint256 inputAmountWithFee = inputAmount * 99;
+        uint256 nomerator = inputAmountWithFee * outputReserve;
+        uint256 denominator = (inputReserve * 99) + inputAmountWithFee;
+        return numerator / denominator;
+    }
 }
