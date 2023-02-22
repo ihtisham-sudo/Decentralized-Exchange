@@ -27,10 +27,13 @@ contract Exchange is ERC20
         }
         else {
             uint ethReserve = ethBalance - msg.value;
-            uint cryptoDevTokenAmount = (msg.value * cryptoDevTokenReserve)/(ethBalance);
+            uint cryptoDevTokenAmount = (msg.value * cryptoDevTokenReserve)/(ethReserve);
             require(amount>= cryptoDevTokenAmount, "Amount Of Token Sent is less than require");
             cryptoDevToken.transferFrom(msg.sender,address(this), cryptoDevTokenAmount);
+            liquidity = (totalSupply() * msg.value) / ethReserve;
+            _mint(msg.sender, liquidity);
         }
+        return liquidity;
 
     }
 }
