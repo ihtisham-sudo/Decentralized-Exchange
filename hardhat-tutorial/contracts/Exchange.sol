@@ -34,6 +34,17 @@ contract Exchange is ERC20
             _mint(msg.sender, liquidity);
         }
         return liquidity;
-
+    }
+    function removeLiquidity(uint _amount) public returns (uint, uint)
+    {
+        require(_amount > 0,"Amount should be greater than zero");
+        uint ethReserve = address(this).balance;
+        uint _totalSupply = totalSupply();
+        uint ethAmount = (ethReserve * _amount)/_totalSupply;
+        uint cryptoDevTokenAmount = (getReserve() * _amount)/_totalSupply;
+        _burn(msg.sender, _amount);
+        payable(msg.msg.sender).transfer(ethAmount);
+        ERC20(cryptoDevTokenAddress).transfer(msg.sender, cryptoDevTokenAmount);
+        return (ethAmount, cryptoDevTokenAmount);
     }
 }
