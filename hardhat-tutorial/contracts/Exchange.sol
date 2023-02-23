@@ -43,7 +43,7 @@ contract Exchange is ERC20
         uint ethAmount = (ethReserve * _amount)/_totalSupply;
         uint cryptoDevTokenAmount = (getReserve() * _amount)/_totalSupply;
         _burn(msg.sender, _amount);
-        payable(msg.msg.sender).transfer(ethAmount);
+        payable(msg.sender).transfer(ethAmount);
         ERC20(cryptoDevTokenAddress).transfer(msg.sender, cryptoDevTokenAmount);
         return (ethAmount, cryptoDevTokenAmount);
     }
