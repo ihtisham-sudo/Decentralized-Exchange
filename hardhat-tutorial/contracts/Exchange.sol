@@ -54,7 +54,7 @@ contract Exchange is ERC20
         require(inputReserve > 0 && outputReserve > 0, "invalid Resources");
         uint256 inputAmountWithFee = inputAmount * 99;
         uint256 nomerator = inputAmountWithFee * outputReserve;
-        uint256 denominator = (inputReserve * 99) + inputAmountWithFee;
+        uint256 denominator = (inputReserve * 100) + inputAmountWithFee;
         return numerator / denominator;
     }
     function ethToCryptoDevToken(uint _minToken) public payable {
