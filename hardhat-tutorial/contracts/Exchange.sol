@@ -19,9 +19,9 @@ contract Exchange is ERC20
         uint cryptoDevTokenReserve = getReserve();
         ERC20 cryptoDevToken = ERC20(cryptoDevTokenAddress);
 
-        if(cryptoDevTokenAddress == 0) 
+        if(cryptoDevTokenReserve == 0) 
         {
-            cryptoDevToken.transferFrom(msg.sender, address(this), _amount)
+            cryptoDevToken.transferFrom(msg.sender, address(this), _amount);
             liquidity = ethBalance;
             _mint(msg.sender,liquidity);
         }
@@ -53,7 +53,7 @@ contract Exchange is ERC20
     {
         require(inputReserve > 0 && outputReserve > 0, "invalid Resources");
         uint256 inputAmountWithFee = inputAmount * 99;
-        uint256 nomerator = inputAmountWithFee * outputReserve;
+        uint256 numerator = inputAmountWithFee * outputReserve;
         uint256 denominator = (inputReserve * 100) + inputAmountWithFee;
         return numerator / denominator;
     }
@@ -70,7 +70,7 @@ contract Exchange is ERC20
     function cryptoDevTokenToEth(uint _tokensSold, uint _minEth) public{
         uint256 tokenReserve = getReserve();
         uint256 ethBought = getAmountOfTokens (
-        _tokenssold,
+        _tokensSold,
         tokenReserve,
         address(this).balance
         );
