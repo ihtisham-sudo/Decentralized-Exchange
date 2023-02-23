@@ -57,4 +57,14 @@ contract Exchange is ERC20
         uint256 denominator = (inputReserve * 99) + inputAmountWithFee;
         return numerator / denominator;
     }
+    function ethToCryptoDevToken(uint _minToken) public payable {
+        uint256 tokenReserve = getReserve();
+        uint256 tokensBought = getAmountOfTokens(
+            msg.value,
+            address(this).balance - msg.value,
+            tokenReserve
+        )
+        require(tokensBought >= _minToken, "insufficient output amount");
+        ERC20(cryptoDevTokenAddress).transfer(msg.sender,tokensBought);
+    }
 }
