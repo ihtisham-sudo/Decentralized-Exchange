@@ -63,8 +63,24 @@ contract Exchange is ERC20
             msg.value,
             address(this).balance - msg.value,
             tokenReserve
-        )
+        );
         require(tokensBought >= _minToken, "insufficient output amount");
         ERC20(cryptoDevTokenAddress).transfer(msg.sender,tokensBought);
+    }
+    function cryptoDevTokenToEth(uint _tokensSold, uint _minEth) public{
+        uint tokenReserve = getReserve();
+        uint ethBought = getAmountOfTokens (
+        _tokenssold,
+        tokenReserve,
+        address(this).balance
+        );
+        require (ethBought >= _minEth, "Insufficient output amount");
+        ERC20(cryptoDevTokenAddress).transferFrom(
+            msg.sender,
+            address(this),
+            _tokensSold
+        );
+        payable(msg.sender).transfer(ethBought);
+
     }
 }
